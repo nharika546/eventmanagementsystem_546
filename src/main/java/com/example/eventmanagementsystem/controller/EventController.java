@@ -44,4 +44,9 @@ public class EventController {
     public void deleteEvent(@PathVariable("eventId") int eventId) {
         eventService.deleteEvent(eventId);
     }
+
+    @GetMapping("/events/{eventId}/sponsors")
+    public List<Sponsor> getEventSponsors(@PathVariable("eventId") int eventId) {
+        return eventService.getEventSponsors(eventId);
+    }
 }

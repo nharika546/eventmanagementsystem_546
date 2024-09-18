@@ -41,14 +41,11 @@ public class SponsorJpaService implements SponsorRepository {
             for (Event ep : sponsor.getEvents()) {
                 Ids.add(ep.getEventId());
             }
-            try {
-                for (int id : Ids) {
-                    Event ev = eventJpaRepository.findById(id).get();
-                }
-            } catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-            }
             List<Event> eventList = eventJpaRepository.findAllById(Ids);
+            for (int i : Ids) {
+                if (!eventJpaRepository.existsById(i))
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
             sponsor.setEvents(eventList);
             for (Event ap : eventList) {
                 ap.getSponsors().add(sponsor);
@@ -115,5 +112,11 @@ public class SponsorJpaService implements SponsorRepository {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+    }
+
+    @Override
+    public List<Event> getSponsorEvents(int sponsorId) {
+        Sponsor sponsor = getSponsorById(sponsorId);
+        return sponsor.getEvents();
     }
 }

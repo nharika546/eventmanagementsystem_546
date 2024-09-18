@@ -12,5 +12,8 @@ public interface EventRepository {
     Event addEvent(Event event);
 
     Event updateEvent(int eventId, Event event);
+
     void deleteEvent(int eventId);
+
+    List<Sponsor> getEventSponsors(int eventId);
 }

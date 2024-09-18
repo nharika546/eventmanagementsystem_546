@@ -44,4 +44,9 @@ public class SponsorController {
     public void deleteSponsor(@PathVariable("sponsorId") int sponsorId) {
         sponsorService.deleteSponsor(sponsorId);
     }
+
+    @GetMapping("/sponsors/{sponsorId}/events")
+    public List<Event> getSponsorEvents(@PathVariable("sponsorId") int sponsorId) {
+        return sponsorService.getSponsorEvents(sponsorId);
+    }
 }
